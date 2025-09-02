@@ -1,0 +1,20 @@
+fastapi==0.115.0
+uvicorn==0.30.6
+pydantic-settings==2.4.0
+sqlalchemy==2.0.32
+alembic==1.13.2
+python-multipart==0.0.9
+scikit-learn==1.5.2
+email-validator==2.1.0.post1
+tldextract==5.1.2
+idna==3.7
+python-dotenv==1.0.1
+
+# File upload & document processing
+pillow==10.4.0
+pdfplumber==0.11.0
+pytesseract==0.3.10
+PyMuPDF==1.24.13
+reportlab
+python-docx==1.1.2
+

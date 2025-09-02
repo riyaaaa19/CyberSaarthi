@@ -1,0 +1,4 @@
+bit.ly
+tinyurl.com
+grabify.link
+goo.gl

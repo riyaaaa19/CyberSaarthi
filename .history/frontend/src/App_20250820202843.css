@@ -1,0 +1,19 @@
+/* Card shadow */
+.card {
+  border-radius: 10px;
+}
+
+.card-body h5 {
+  font-weight: 600;
+}
+
+/* Buttons */
+.btn {
+  border-radius: 6px;
+}
+
+/* Input & textarea */
+textarea.form-control {
+  font-size: 0.95rem;
+  resize: vertical;
+}
