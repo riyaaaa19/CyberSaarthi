@@ -1,7 +1,0 @@
-{
-  "verdict": {
-    "safe": "Safe",
-    "suspicious": "Suspicious",
-    "malicious": "Malicious"
-  }
-}
