@@ -5,49 +5,47 @@
 **AI-Powered Local Cyber Shield for MSMEs**
 
 CyberSaarthi is an **AI-powered cybersecurity assistant** tailored for Indian MSMEs.
-It protects small businesses from phishing, fake invoices, unauthorized access, and fraud, while being **affordable, multilingual, and offline-first** for tier-2/3 cities and rural areas.
+It protects small businesses from phishing emails, fake invoices, and fraud while being **affordable, bilingual, and user-friendly**.
 
 ---
 
 ## 🔹 Problem Statement
 
-Indian MSMEs are rapidly digitizing but lack affordable cybersecurity tools.
-They face:
+Indian MSMEs are rapidly digitizing but face a **cybersecurity gap** due to:
 
 * Rising phishing & invoice frauds
-* Unauthorized system access & data breaches
-* Lack of awareness and technical expertise
-* No localized, affordable solutions
+* Lack of affordable, localized security tools
+* Overly technical solutions not usable by non-experts
+* No bilingual support (English + Hindi)
 
 ---
 
 ## 💡 Proposed Solution
 
-CyberSaarthi provides an **AI + rule-based hybrid platform** for MSMEs that:
+CyberSaarthi provides a **hybrid AI + rule-based platform** that:
 
-* Detects phishing, fake invoices, and anomalies in real-time
-* Issues **alerts and risk scores** (Safe / Suspicious / Malicious)
-* Works in **English & Hindi** with a **simple UI**
-* Functions in **offline-first mode** for low-connectivity areas
-* Provides **PDF/CSV reports** and dashboard insights
+* Detects phishing and fake invoices in real-time
+* Generates clear verdicts: **Safe / Suspicious / Malicious**
+* Supports **English & Hindi** with a simple interface
+* Provides an **interactive dashboard** with charts, stats, and light/dark themes
 
 ---
 
 ## 🌟 Novelty & Innovation
 
-* **Localized & multilingual**: Designed for India’s MSMEs (English + Hindi).
-* **Offline-first**: Works even in low-infrastructure areas, syncs online later.
-* **Unified Platform**: Combines phishing detection, invoice analysis, and fraud monitoring.
-* **No IT dependency**: MSMEs can manage security without experts.
+* **Localized & multilingual:** Built for India’s MSMEs (EN + HI).
+* **Hybrid detection:** AI + heuristics ensure robust fraud detection.
+* **User-friendly dashboard:** Real-time results & bilingual toggle.
+* **Scalable design:** Works as prototype with SQLite, extendable to enterprise scale.
 
 ---
 
 ## 📈 Impact & Benefits
 
-* Prevents **financial & reputational damage** for MSMEs
-* Builds **trust in digital adoption**
-* Reduces cost of **cyberattack recovery**
-* Empowers small businesses with **self-managed digital safety**
+* Helps **MSMEs & individuals** detect scams instantly
+* Reduces **financial fraud risks** and builds **trust in digital adoption**
+* Promotes **cyber awareness in regional languages**
+* Supports the **Digital India initiative**
 
 ---
 
@@ -72,8 +70,8 @@ CyberSaarthi provides an **AI + rule-based hybrid platform** for MSMEs that:
 
 ### **File Processing**
 
-* pdfplumber (PDF invoices)
-* python-docx (Word invoices)
+* pdfplumber (PDF invoices – future support)
+* python-docx (Word invoices – future support)
 
 ### **Database**
 
@@ -82,7 +80,7 @@ CyberSaarthi provides an **AI + rule-based hybrid platform** for MSMEs that:
 ### **Deployment Ready**
 
 * Docker
-* Cloud integration (future roadmap)
+* Cloud (future roadmap)
 
 ---
 
@@ -90,12 +88,12 @@ CyberSaarthi provides an **AI + rule-based hybrid platform** for MSMEs that:
 
 ```mermaid
 flowchart TD
-    User[👤 MSME User] -->|Upload Email/Invoice| Frontend[🌐 React Frontend]
-    Frontend --> Backend[⚡ FastAPI Backend]
+    User[👤 MSME User] -->|Enter Email/Invoice Text| Frontend[🌐 React + Bootstrap + Chart.js]
+    Frontend --> Backend[⚡ FastAPI Backend + SQLAlchemy]
     Backend --> AIEngine[🤖 AI/ML Engine<br>TF-IDF + Logistic Regression + Rules]
     Backend --> DB[(🗄️ SQLite / PostgreSQL)]
     AIEngine --> Verdict[✅ Safe / ⚠️ Suspicious / ❌ Malicious]
-    Verdict --> Dashboard[📊 Reports & Visualizations]
+    Verdict --> Dashboard[📊 Interactive Dashboard<br>Charts + Stats + Bilingual Toggle]
 ```
 
 ---
@@ -116,10 +114,10 @@ pip install -r backend/requirements.txt
 uvicorn backend.app.main:app --reload
 ```
 
-Runs at **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+Runs at: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
 
-* Swagger Docs: `/docs`
-* Redoc: `/redoc`
+* Swagger Docs → `/docs`
+* Redoc → `/redoc`
 
 ### 3️⃣ Frontend Setup
 
@@ -129,33 +127,36 @@ npm install
 npm start
 ```
 
-Runs at **[http://localhost:3000](http://localhost:3000)**
+Runs at: **[http://localhost:3000](http://localhost:3000)**
 
 ---
 
 ## 📊 Dashboard Features
 
-* Total scans & breakdown (Safe/Suspicious/Malicious)
-* Threat trends with **charts**
-* Reports table with export options (PDF/CSV)
-* Light/Dark mode
-* Language toggle (EN/HI)
+* Enter email/invoice text → get **verdict** (Safe / Suspicious / Malicious)
+* Real-time **scan statistics & distribution**
+* **Charts** for threat trends
+* **Recent scans table**
+* **Light/Dark mode toggle**
+* **Bilingual support (EN/HI)**
 
 ---
 
 ## 🛣️ Roadmap
 
+* [ ] PDF & Word upload support
 * [ ] Multi-user accounts & authentication
-* [ ] Gmail/Outlook integration for direct scanning
-* [x] SMS/Email real-time alerts
-* [ ] Transformer-based phishing detection (BERT, etc.)
-* [ ] Cloud deployment for enterprise-scale adoption
+* [ ] Gmail/Outlook direct email scanning
+* [ ] SMS/Email alerts for high-risk cases
+* [ ] Transformer-based phishing detection (BERT etc.)
+* [ ] Offline-first mode for MSMEs
+* [ ] Cloud deployment for enterprise-scale
 
 ---
 
 ## 🌍 Market Potential
 
-* **63M+ MSMEs in India** = huge adoption base
+* **63M+ MSMEs in India** → huge adoption base
 * **\$80B+ digital MSME economy (by 2027)**
 * Partnerships with **banks, incubators, and telecoms**
 * Expandable across industries (retail, logistics, manufacturing, services)
@@ -164,10 +165,13 @@ Runs at **[http://localhost:3000](http://localhost:3000)**
 
 ## 👩‍💻 Team Expertise
 
-* Experience in **AI/ML, backend API development, and information security**
-* Prior projects in **fraud detection & digital safety tools**
-* Expertise in **rural tech deployments** and low-infra challenges
+* Skilled in **AI/ML, FastAPI, and fraud detection systems**
+* Experience with **backend APIs & data visualization**
+* Focus on **affordable, localized digital safety tools**
 
 ---
 
-Made by The Avalanche
+✦ Made with ❤️ by **Team The Avalanche**
+
+---
+
