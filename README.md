@@ -1,125 +1,182 @@
+# 🛡️ CyberSaarthi - AI-Powered Phishing & Invoice Fraud Detection Platform
 
-
-# 🛡️ CyberSaarthi
-
-**AI-Powered Local Cyber Shield for MSMEs**
-
-CyberSaarthi is an **AI-powered cybersecurity assistant** tailored for Indian MSMEs.
-It protects small businesses from phishing emails, fake invoices, and fraud while being **affordable, bilingual, and user-friendly**.
+CyberSaarthi is a full-stack web application designed to help Indian MSMEs detect phishing emails and identify fraudulent invoices using AI-driven analysis and OCR-based intelligence.
 
 ---
 
-## 🔹 Problem Statement
+## 🎯 Overview
 
-Indian MSMEs are rapidly digitizing but face a **cybersecurity gap** due to:
+CyberSaarthi helps users to:
 
-* Rising phishing & invoice frauds
-* Lack of affordable, localized security tools
-* Overly technical solutions not usable by non-experts
-* No bilingual support (English + Hindi)
-
----
-
-## 💡 Proposed Solution
-
-CyberSaarthi provides a **hybrid AI + rule-based platform** that:
-
-* Detects phishing and fake invoices in real-time
-* Generates clear verdicts: **Safe / Suspicious / Malicious**
-* Supports **English & Hindi** with a simple interface
-* Provides an **interactive dashboard** with charts, stats, and light/dark themes
+* Detect phishing emails using ML + keyword analysis
+* Analyze invoices using OCR and fraud detection rules
+* Highlight suspicious content in real-time
+* Maintain secure user-specific data using JWT authentication
+* Provide bilingual support (English and Hindi)
 
 ---
 
-## 🌟 Novelty & Innovation
+## 📊 System Architecture
 
-* **Localized & multilingual:** Built for India’s MSMEs (EN + HI).
-* **Hybrid detection:** AI + heuristics ensure robust fraud detection.
-* **User-friendly dashboard:** Real-time results & bilingual toggle.
-* **Scalable design:** Works as prototype with SQLite, extendable to enterprise scale.
-
----
-
-## 📈 Impact & Benefits
-
-* Helps **MSMEs & individuals** detect scams instantly
-* Reduces **financial fraud risks** and builds **trust in digital adoption**
-* Promotes **cyber awareness in regional languages**
-* Supports the **Digital India initiative**
+```mermaid
+flowchart LR
+    A[React Frontend] --> B[FastAPI Backend]
+    B --> C[SQLite Database]
+    B --> D[ML Model]
+    B --> E[OCR Engine]
+```
 
 ---
 
-## ⚙️ Technology Stack
-
-### **Frontend**
-
-* React.js
-* Inline CSS + Bootstrap
-* Chart.js (data visualization)
-
-### **Backend**
-
-* FastAPI (Python)
-* SQLAlchemy ORM
-
-### **AI/ML Engine**
-
-* Scikit-learn (Logistic Regression + TF-IDF)
-* Joblib (model persistence)
-* Regex + NLP rules (English + Hindi)
-
-### **File Processing**
-
-* pdfplumber (PDF invoices – future support)
-* python-docx (Word invoices – future support)
-
-### **Database**
-
-* SQLite (prototype) → scalable to PostgreSQL/MySQL
-
-### **Deployment Ready**
-
-* Docker
-* Cloud (future roadmap)
-
----
-
-## 🏗️ System Architecture
+## 🔐 Authentication Flow
 
 ```mermaid
 flowchart TD
-    User[👤 MSME User] -->|Enter Email/Invoice Text| Frontend[🌐 React + Bootstrap + Chart.js]
-    Frontend --> Backend[⚡ FastAPI Backend + SQLAlchemy]
-    Backend --> AIEngine[🤖 AI/ML Engine<br>TF-IDF + Logistic Regression + Rules]
-    Backend --> DB[(🗄️ SQLite / PostgreSQL)]
-    AIEngine --> Verdict[✅ Safe / ⚠️ Suspicious / ❌ Malicious]
-    Verdict --> Dashboard[📊 Interactive Dashboard<br>Charts + Stats + Bilingual Toggle]
+    A[User Login or Signup] --> B[Validate Input]
+    B --> C[Hash Password using Bcrypt]
+    C --> D[Check Database]
+    D --> E[Generate JWT Token]
+    E --> F[Store Token in LocalStorage]
+    F --> G[Access Dashboard]
 ```
 
 ---
 
-## ⚡ Installation & Setup
+## 🛡️ Data Isolation Model
 
-### 1️⃣ Clone the repository
-
-```bash
-git clone https://github.com/riyaaaa19/CyberSaarthi.git
-cd CyberSaarthi
+```mermaid
+flowchart LR
+    U[User] --> S[Scan History]
+    U --> R[Reports]
+    S --> DB[Database]
+    R --> DB
 ```
 
-### 2️⃣ Backend Setup
+---
 
-```bash
-pip install -r backend/requirements.txt
-uvicorn backend.app.main:app --reload
+## 📧 Phishing Detection Pipeline
+
+```mermaid
+flowchart LR
+    A[Email Input] --> B[Keyword Detection]
+    B --> C[ML Model Analysis]
+    C --> D[Risk Score]
+    D --> E[Highlight Suspicious Content]
+    E --> F[Store Result]
+    F --> G[Generate Report]
 ```
 
-Runs at: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+---
 
-* Swagger Docs → `/docs`
-* Redoc → `/redoc`
+## 📄 Invoice Analysis Workflow
 
-### 3️⃣ Frontend Setup
+```mermaid
+flowchart LR
+    A[Upload Invoice] --> B[File Validation]
+    B --> C[Text Extraction OCR or PDF]
+    C --> D[Data Cleaning]
+    D --> E[Fraud Detection]
+    E --> F[Risk Result]
+    F --> G[Save and Generate Report]
+```
+
+---
+
+## 🔒 Core Features
+
+### 🔐 Authentication & Security
+
+* JWT-based authentication
+* Bcrypt password hashing
+* Secure user data isolation
+* Protected routes
+
+---
+
+### 📧 Phishing Detection
+
+* ML-based detection
+* 24+ suspicious keyword detection
+* Real-time highlighting
+* Risk classification
+
+---
+
+### 📄 Invoice Analysis
+
+* Supports PDF and image files
+* OCR text extraction
+* Fraud detection logic
+* Suspicious keyword scanning
+
+---
+
+### 🎨 User Experience
+
+* Drag and drop file upload
+* Responsive UI
+* Dark and Light theme
+* Clean dashboard
+
+---
+
+### 📊 Reports
+
+* PDF report generation
+* Scan history tracking
+* User-specific analytics
+
+---
+
+## 🛠️ Technology Stack
+
+### Backend
+
+* FastAPI
+* SQLite
+* SQLAlchemy
+* JWT Authentication
+* Bcrypt
+
+### Frontend
+
+* React.js
+* Axios
+* Context API
+* CSS3
+
+### AI and Processing
+
+* Scikit-learn
+* PyTesseract
+* PDFPlumber
+
+---
+
+## 📁 Project Structure
+
+```
+cybersaarthi/
+├── backend/
+├── frontend/
+└── README.md
+```
+
+---
+
+## 🚀 Setup Instructions
+
+### Backend
+
+```bash
+cd backend
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+### Frontend
 
 ```bash
 cd frontend
@@ -127,51 +184,109 @@ npm install
 npm start
 ```
 
-Runs at: **[http://localhost:3000](http://localhost:3000)**
+---
+
+## 📖 Usage
+
+1. Register or Login
+2. Paste email or upload invoice
+3. Click scan
+4. View results with highlights
+5. Download report
 
 ---
 
-## 📊 Dashboard Features
+## 🔗 API Endpoints
 
-* Enter email/invoice text → get **verdict** (Safe / Suspicious / Malicious)
-* Real-time **scan statistics & distribution**
-* **Charts** for threat trends
-* **Recent scans table**
-* **Light/Dark mode toggle**
-* **Bilingual support (EN/HI)**
+### Auth
 
----
+* POST /api/auth/register
+* POST /api/auth/login
 
-## 🛣️ Roadmap
+### Scan
 
-* [ ] PDF & Word upload support
-* [ ] Multi-user accounts & authentication
-* [ ] Gmail/Outlook direct email scanning
-* [ ] SMS/Email alerts for high-risk cases
-* [ ] Transformer-based phishing detection (BERT etc.)
-* [ ] Offline-first mode for MSMEs
-* [ ] Cloud deployment for enterprise-scale
+* POST /api/scan/phishing
+* POST /api/scan/invoice
+* GET /api/scan/history
+
+### Reports
+
+* POST /api/reports/generate
 
 ---
 
-## 🌍 Market Potential
+## 🔐 Security
 
-* **63M+ MSMEs in India** → huge adoption base
-* **\$80B+ digital MSME economy (by 2027)**
-* Partnerships with **banks, incubators, and telecoms**
-* Expandable across industries (retail, logistics, manufacturing, services)
-
----
-
-## 👩‍💻 Team Expertise
-
-* Skilled in **AI/ML, FastAPI, and fraud detection systems**
-* Experience with **backend APIs & data visualization**
-* Focus on **affordable, localized digital safety tools**
+* Password hashing using Bcrypt
+* JWT-based authentication
+* User data isolation
+* Secure APIs
 
 ---
 
-✦ Made with ❤️ by **Team The Avalanche**
+## 💾 Database Models
+
+### User
+
+* id, email, password
+
+### Scan
+
+* user_id, content_type, result
+
+### Report
+
+* user_id, scan_id
 
 ---
 
+## ✅ Project Status
+
+✔ Authentication implemented
+✔ Phishing detection working
+✔ Invoice OCR working
+✔ PDF reports generated
+✔ Responsive UI built
+
+---
+
+## 🔮 Future Scope
+
+* Gmail integration
+* Advanced ML models
+* Real-time alerts
+* Multi-user support
+* Cloud deployment
+
+---
+
+## 🚢 Deployment
+
+* Localhost
+* Docker
+* Cloud platforms
+
+---
+
+## 🧠 Key Highlights
+
+* AI + rule-based hybrid system
+* Real-time detection
+* Lightweight and scalable
+* Designed for real-world use
+
+---
+
+## 🙌 Conclusion
+
+CyberSaarthi provides an effective and intelligent solution to detect phishing emails and invoice fraud, making it highly useful for MSMEs and cybersecurity awareness.
+
+---
+
+## 📄 License
+
+MIT License
+
+---
+
+**CyberSaarthi – Secure Your Digital World 🛡️**
