@@ -50,6 +50,16 @@ const MESSAGES = {
 
     // Reports
     "reports.title": "Threat Reports",
+    "reports.totalScans": "Total Scans",
+    "reports.filterByVerdict": "Filter by Verdict:",
+    "reports.allReports": "All Reports",
+    "reports.result": "Result",
+    "reports.results": "Results",
+    "reports.subtitle": "Visualize your past scanning history with insights",
+    "reports.history": "Recent Scan History",
+    "reports.annotation": "Here is an easy overview of your latest scan details",
+    "reports.noResultsFor": "No",
+    "reports.resultsFound": "results found",
 
     // Explanations
     "explanation.safe": "Email/Invoice appears safe.",
@@ -72,6 +82,9 @@ const MESSAGES = {
     "scanner.emailTab": "Email",
     "scanner.invoiceTab": "Invoice",
     "scanner.scanning": "Scanning...",
+    "scanner.selectFile": "Select a file first",
+    "scanner.scanInvoiceFile": "Scan Invoice File",
+    "scanner.uploading": "Uploading...",
 
     // Settings
     "settings.title": "Settings",
@@ -135,6 +148,16 @@ const MESSAGES = {
 
     // Reports
     "reports.title": "खतरे की रिपोर्टें",
+    "reports.totalScans": "कुल स्कैन",
+    "reports.filterByVerdict": "परिणाम के अनुसार फ़िल्टर करें:",
+    "reports.allReports": "सभी रिपोर्टें",
+    "reports.result": "परिणाम",
+    "reports.results": "परिणाम",
+    "reports.subtitle": "अपने पिछले स्कैनिंग इतिहास को अंतर्दृष्टि के साथ देखें",
+    "reports.history": "हाल का स्कैन इतिहास",
+    "reports.annotation": "यहाँ आपके नवीनतम स्कैन विवरण का आसान अवलोकन है",
+    "reports.noResultsFor": "कोई",
+    "reports.resultsFound": "परिणाम नहीं मिले",
 
     // Explanations
     "explanation.safe": "ईमेल/इनवॉइस सुरक्षित प्रतीत होता है।",
@@ -157,6 +180,9 @@ const MESSAGES = {
     "scanner.emailTab": "ईमेल",
     "scanner.invoiceTab": "इनवॉइस",
     "scanner.scanning": "स्कैन हो रहा है...",
+    "scanner.selectFile": "कृपया पहले फ़ाइल चुनें",
+    "scanner.scanInvoiceFile": "इनवॉइस फ़ाइल स्कैन करें",
+    "scanner.uploading": "अपलोड हो रहा है...",
 
     // Settings
     "settings.title": "सेटिंग्स",

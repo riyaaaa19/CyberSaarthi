@@ -7,6 +7,11 @@ function getApiKeyHeader() {
   return key ? { "x-api-key": key } : {};
 }
 
+function getAuthHeader() {
+  const token = window.localStorage.getItem('token');
+  return token ? { "Authorization": `Bearer ${token}` } : {};
+}
+
 async function handleResp(res) {
   const contentType = res.headers.get('content-type') || '';
   if (!res.ok) {
@@ -22,7 +27,7 @@ export async function getHistory(limit=20, offset=0) {
   const url = new URL(`${API_BASE}${V1}/reports/history`);
   url.searchParams.set('limit', limit);
   url.searchParams.set('offset', offset);
-  const res = await fetch(url.toString(), { headers: getApiKeyHeader() });
+  const res = await fetch(url.toString(), { headers: { ...getAuthHeader(), ...getApiKeyHeader() } });
   return handleResp(res);
 }
 
@@ -30,7 +35,7 @@ export async function scanEmail(emailText, lang="en") {
   const body = { email_text: emailText, lang };
   const res = await fetch(`${API_BASE}${V1}/scan/email`, {
     method: 'POST',
-    headers: { "Content-Type": "application/json", ...getApiKeyHeader() },
+    headers: { "Content-Type": "application/json", ...getAuthHeader(), ...getApiKeyHeader() },
     body: JSON.stringify(body),
   });
   return handleResp(res);
@@ -40,7 +45,7 @@ export async function scanInvoiceText(invoiceText, lang="en") {
   const body = { invoice_text: invoiceText, lang };
   const res = await fetch(`${API_BASE}${V1}/scan/invoice`, {
     method: 'POST',
-    headers: { "Content-Type": "application/json", ...getApiKeyHeader() },
+    headers: { "Content-Type": "application/json", ...getAuthHeader(), ...getApiKeyHeader() },
     body: JSON.stringify(body),
   });
   return handleResp(res);
@@ -51,7 +56,7 @@ export async function uploadInvoiceFile(file) {
   formData.append("file", file);
   const res = await fetch(`${API_BASE}${V1}/scan/invoice/upload`, {
     method: "POST",
-    headers: getApiKeyHeader(),
+    headers: { ...getAuthHeader(), ...getApiKeyHeader() },
     body: formData
   });
   return handleResp(res);

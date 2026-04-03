@@ -55,9 +55,10 @@ function Dashboard() {
           total: items.length,
         });
       })
-      .catch(() => {
-        // fallback dummy data
-        setSummary({ safe: 8, suspicious: 3, malicious: 1, total: 12 });
+      .catch((err) => {
+        console.error("Failed to load dashboard history:", err);
+        // Show empty state instead of dummy data
+        setSummary({ safe: 0, suspicious: 0, malicious: 0, total: 0 });
       });
   }, []);
 
@@ -104,39 +105,45 @@ function Dashboard() {
   // Styles
   const cardBase = {
     flex: 1,
-    margin: "10px",
-    padding: "20px",
-    borderRadius: "12px",
-    color: "#fff",
+    padding: "24px",
+    borderRadius: "16px",
+    color: "#ffffff",
     textAlign: "center",
-    boxShadow: "0 3px 8px rgba(0,0,0,0.15)",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
+    cursor: "pointer",
   };
 
   const sectionStyle = {
-    background: theme === "dark" ? "#1e1e1e" : "#fff",
-    borderRadius: "12px",
-    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-    padding: "20px",
-    marginBottom: "30px",
+    background: theme === "dark" ? "#1e1e1e" : "#ffffff",
+    borderRadius: "16px",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+    padding: "24px",
+    marginBottom: "32px",
+    border: theme === "dark" ? "1px solid #374151" : "1px solid #e5e7eb",
   };
 
   const tableStyle = {
     width: "100%",
     borderCollapse: "collapse",
-    marginTop: "15px",
+    marginTop: "16px",
   };
 
   const thStyle = {
-    padding: "10px",
-    borderBottom: "2px solid #ccc",
+    padding: "16px",
+    borderBottom: "2px solid #e5e7eb",
     textAlign: "left",
-    background: theme === "dark" ? "#333" : "#f5f5f5",
+    background: theme === "dark" ? "#374151" : "#f9fafb",
+    fontWeight: "600",
+    fontSize: "14px",
+    color: theme === "dark" ? "#f3f4f6" : "#374151",
   };
 
   const tdStyle = {
-    padding: "10px",
-    borderBottom: "1px solid #eee",
+    padding: "16px",
+    borderBottom: "1px solid #e5e7eb",
     fontSize: "14px",
+    color: theme === "dark" ? "#d1d5db" : "#6b7280",
   };
 
   // ✅ Translate verdicts
@@ -153,114 +160,263 @@ const verdictMap = {
   };
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        background: theme === "dark" ? "#121212" : "#f4f6f9",
-        minHeight: "100vh",
-      }}
-    >
-      <h2 className="text-2xl font-bold mb-6">{t("dashboard.heading")}</h2>
+    <div className="dashboard-page">
+      <div className="dashboard-header">
+        <h1 className="dashboard-heading">
+          {t("dashboard.heading")}
+        </h1>
+        <p className="dashboard-subtitle">
+          Monitor and analyze security threats in real-time
+        </p>
+      </div>
 
       {/* Stat Cards */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "30px",
-        }}
-      >
-        <div style={{ ...cardBase, background: "#1976d2" }}>
-          <h4>{t("dashboard.total")}</h4>
-          <h1>{summary.total}</h1>
+      <div className="dashboard-stat-grid">
+        <div
+          style={{
+            ...cardBase,
+            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            ":hover": { transform: "translateY(-4px)", boxShadow: "0 8px 24px rgba(0,0,0,0.15)" }
+          }}
+          onMouseEnter={(e) => e.target.style.transform = "translateY(-4px)"}
+          onMouseLeave={(e) => e.target.style.transform = "translateY(0)"}
+        >
+          <div style={{ fontSize: "14px", opacity: "0.9", marginBottom: "8px" }}>
+            {t("dashboard.total")}
+          </div>
+          <div style={{ fontSize: "48px", fontWeight: "700" }}>
+            {summary.total}
+          </div>
         </div>
-        <div style={{ ...cardBase, background: "#4caf50" }}>
-          <h4>{t("dashboard.safe")}</h4>
-          <h1>{summary.safe}</h1>
+
+        <div
+          style={{
+            ...cardBase,
+            background: "linear-gradient(135deg, #4ade80 0%, #22c55e 100%)",
+          }}
+          onMouseEnter={(e) => e.target.style.transform = "translateY(-4px)"}
+          onMouseLeave={(e) => e.target.style.transform = "translateY(0)"}
+        >
+          <div style={{ fontSize: "14px", opacity: "0.9", marginBottom: "8px" }}>
+            {t("dashboard.safe")}
+          </div>
+          <div style={{ fontSize: "48px", fontWeight: "700" }}>
+            {summary.safe}
+          </div>
         </div>
-        <div style={{ ...cardBase, background: "#ff9800" }}>
-          <h4>{t("dashboard.suspicious")}</h4>
-          <h1>{summary.suspicious}</h1>
+
+        <div
+          style={{
+            ...cardBase,
+            background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+          }}
+          onMouseEnter={(e) => e.target.style.transform = "translateY(-4px)"}
+          onMouseLeave={(e) => e.target.style.transform = "translateY(0)"}
+        >
+          <div style={{ fontSize: "14px", opacity: "0.9", marginBottom: "8px" }}>
+            {t("dashboard.suspicious")}
+          </div>
+          <div style={{ fontSize: "48px", fontWeight: "700" }}>
+            {summary.suspicious}
+          </div>
         </div>
-        <div style={{ ...cardBase, background: "#f44336" }}>
-          <h4>{t("dashboard.malicious")}</h4>
-          <h1>{summary.malicious}</h1>
+
+        <div
+          style={{
+            ...cardBase,
+            background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
+          }}
+          onMouseEnter={(e) => e.target.style.transform = "translateY(-4px)"}
+          onMouseLeave={(e) => e.target.style.transform = "translateY(0)"}
+        >
+          <div style={{ fontSize: "14px", opacity: "0.9", marginBottom: "8px" }}>
+            {t("dashboard.malicious")}
+          </div>
+          <div style={{ fontSize: "48px", fontWeight: "700" }}>
+            {summary.malicious}
+          </div>
         </div>
       </div>
 
       {/* Charts Section */}
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          marginBottom: "30px",
-        }}
-      >
-        <div style={{ ...sectionStyle, flex: 1 }}>
-          <h3>{t("dashboard.distribution")}</h3>
-          <div style={{ height: "300px" }}>
-            <Doughnut data={doughnutData} options={{ maintainAspectRatio: false }} />
+      <div className="dashboard-chart-grid">
+        <div style={sectionStyle}>
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "24px",
+            gap: "12px"
+          }}>
+            <div style={{
+              width: "8px",
+              height: "8px",
+              borderRadius: "50%",
+              background: "#2563eb"
+            }}></div>
+            <h3 style={{
+              fontSize: "20px",
+              fontWeight: "600",
+              color: theme === "dark" ? "#f3f4f6" : "#111827",
+              margin: 0
+            }}>
+              {t("dashboard.distribution")}
+            </h3>
+          </div>
+          <div style={{ height: "320px" }}>
+            <Doughnut data={doughnutData} options={{
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: 'bottom',
+                  labels: {
+                    padding: 20,
+                    usePointStyle: true,
+                  }
+                }
+              }
+            }} />
           </div>
         </div>
-        <div style={{ ...sectionStyle, flex: 1 }}>
-          <h3>{t("dashboard.trend")}</h3>
-          <div style={{ height: "300px" }}>
-            <Line data={lineData} options={{ maintainAspectRatio: false }} />
+
+        <div style={sectionStyle}>
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "24px",
+            gap: "12px"
+          }}>
+            <div style={{
+              width: "8px",
+              height: "8px",
+              borderRadius: "50%",
+              background: "#7c3aed"
+            }}></div>
+            <h3 style={{
+              fontSize: "20px",
+              fontWeight: "600",
+              color: theme === "dark" ? "#f3f4f6" : "#111827",
+              margin: 0
+            }}>
+              {t("dashboard.trend")}
+            </h3>
+          </div>
+          <div style={{ height: "320px" }}>
+            <Line data={lineData} options={{
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: false
+                }
+              },
+              scales: {
+                x: {
+                  grid: {
+                    display: false
+                  }
+                },
+                y: {
+                  beginAtZero: true,
+                  grid: {
+                    color: theme === "dark" ? "#374151" : "#e5e7eb"
+                  }
+                }
+              }
+            }} />
           </div>
         </div>
       </div>
 
       {/* Recent Activity Table */}
       <div style={sectionStyle}>
-        <h3>{t("dashboard.recentActivity")}</h3>
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th style={thStyle}>#</th>
-              <th style={thStyle}>
-                {t("scanner.emailTab")}/{t("scanner.invoiceTab")}
-              </th>
-              <th style={thStyle}>{t("dashboard.verdict")}</th>
-              <th style={thStyle}>{t("dashboard.date")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {history.slice(0, 5).map((h, i) => {
-              const cleanVerdict = normalizeVerdict(h.verdict);
-              return (
-                <tr key={i}>
-                  <td style={tdStyle}>{i + 1}</td>
-                  {/* ✅ Use translated scan type */}
-                  <td style={tdStyle}>{scanTypeMap[h.scan_type] || h.scan_type}</td>
-                  <td
-                    style={{
-                      ...tdStyle,
-                      fontWeight: "600",
-                      color:
-                        cleanVerdict === "SAFE"
-                          ? "green"
-                          : cleanVerdict === "SUSPICIOUS"
-                          ? "#ff9800"
-                          : "red",
-                    }}
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          marginBottom: "24px",
+          gap: "12px"
+        }}>
+          <div style={{
+            width: "8px",
+            height: "8px",
+            borderRadius: "50%",
+            background: "#059669"
+          }}></div>
+          <h3 style={{
+            fontSize: "20px",
+            fontWeight: "600",
+            color: theme === "dark" ? "#f3f4f6" : "#111827",
+            margin: 0
+          }}>
+            {t("dashboard.recentActivity")}
+          </h3>
+        </div>
+
+        <div style={{ overflowX: "auto" }}>
+          <table style={tableStyle}>
+            <thead>
+              <tr>
+                <th style={thStyle}>#</th>
+                <th style={thStyle}>Type</th>
+                <th style={thStyle}>Status</th>
+                <th style={thStyle}>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {history.slice(0, 8).map((h, i) => {
+                const cleanVerdict = normalizeVerdict(h.verdict);
+                return (
+                  <tr key={i} style={{
+                    transition: "background 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => e.target.closest('tr').style.background = theme === "dark" ? "#374151" : "#f9fafb"}
+                  onMouseLeave={(e) => e.target.closest('tr').style.background = "transparent"}
                   >
-                    {verdictMap[cleanVerdict] || cleanVerdict}
-                  </td>
-                  <td style={tdStyle}>
-                    {new Date(h.created_at).toLocaleString()}
+                    <td style={tdStyle}>{i + 1}</td>
+                    <td style={tdStyle}>
+                      <span style={{
+                        background: theme === "dark" ? "#374151" : "#f3f4f6",
+                        padding: "4px 8px",
+                        borderRadius: "6px",
+                        fontSize: "12px",
+                        fontWeight: "500"
+                      }}>
+                        {scanTypeMap[h.scan_type] || h.scan_type}
+                      </span>
+                    </td>
+                    <td style={tdStyle}>
+                      <span style={{
+                        padding: "4px 8px",
+                        borderRadius: "6px",
+                        fontSize: "12px",
+                        fontWeight: "500",
+                        background: cleanVerdict === "SAFE" ? "#dcfce7" :
+                                   cleanVerdict === "SUSPICIOUS" ? "#fef3c7" : "#fee2e2",
+                        color: cleanVerdict === "SAFE" ? "#166534" :
+                               cleanVerdict === "SUSPICIOUS" ? "#92400e" : "#991b1b",
+                      }}>
+                        {verdictMap[cleanVerdict] || cleanVerdict}
+                      </span>
+                    </td>
+                    <td style={tdStyle}>
+                      {new Date(h.created_at).toLocaleString()}
+                    </td>
+                  </tr>
+                );
+              })}
+              {history.length === 0 && (
+                <tr>
+                  <td style={{ ...tdStyle, textAlign: "center", padding: "48px" }} colSpan="4">
+                    <div style={{
+                      color: theme === "dark" ? "#6b7280" : "#9ca3af",
+                      fontSize: "16px"
+                    }}>
+                      No recent activity
+                    </div>
                   </td>
                 </tr>
-              );
-            })}
-            {history.length === 0 && (
-              <tr>
-                <td style={tdStyle} colSpan="4" align="center">
-                  ⚠️ {t("dashboard.noData")}
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

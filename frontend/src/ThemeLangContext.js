@@ -9,8 +9,10 @@ export const ThemeLangProvider = ({ children }) => {
   // Apply theme globally
   useEffect(() => {
     localStorage.setItem("THEME", theme);
-    document.body.style.background = theme === "dark" ? "#121212" : "#fff";
-    document.body.style.color = theme === "dark" ? "#f5f5f5" : "#000";
+    document.body.classList.toggle("dark", theme === "dark");
+    document.body.classList.toggle("light", theme === "light");
+    document.body.style.background = theme === "dark" ? "#0f172a" : "#f3f4f6";
+    document.body.style.color = theme === "dark" ? "#e2e8f0" : "#1f2937";
   }, [theme]);
 
   // Persist lang

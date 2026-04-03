@@ -8,7 +8,8 @@ from ..services.invoice import evaluate_invoice, evaluate_invoice_file, InvoiceV
 from ..utils.security import verify_api_key
 from ..utils.text import sha256
 from ..models import ScanHistory
-from ..deps import settings_dep, db_dep
+from ..auth_models import User
+from ..deps import settings_dep, db_dep, get_current_user
 from ..config import Settings
 
 router = APIRouter(prefix="/scan", tags=["scan"])
@@ -49,7 +50,7 @@ def classify_malicious(email_text: str, explanations: list[str], score: float):
 
 
 @router.post("/email", response_model=ScanResponse, dependencies=[Depends(verify_api_key)])
-def scan_email(payload: EmailScanRequest, settings: Settings = Depends(settings_dep), db: Session = Depends(db_dep)):
+def scan_email(payload: EmailScanRequest, settings: Settings = Depends(settings_dep), db: Session = Depends(db_dep), current_user: User = Depends(get_current_user)):
     import json
     detector = _get_detector(settings)
     # Predict in both languages
@@ -75,6 +76,7 @@ def scan_email(payload: EmailScanRequest, settings: Settings = Depends(settings_
         "hi": "; ".join(result_hi.explanations)
     }
     record = ScanHistory(
+        user_id=current_user.id,
         scan_type="email",
         input_hash=sha256(payload.email_text[:2048]),
         input_text=payload.email_text,
@@ -97,7 +99,7 @@ def scan_email(payload: EmailScanRequest, settings: Settings = Depends(settings_
 
 
 @router.post("/invoice", response_model=ScanResponse, dependencies=[Depends(verify_api_key)])
-def scan_invoice(payload: InvoiceScanRequest, db: Session = Depends(db_dep)):
+def scan_invoice(payload: InvoiceScanRequest, db: Session = Depends(db_dep), current_user: User = Depends(get_current_user)):
     import json
     result_en: InvoiceVerdict = evaluate_invoice(payload.invoice_text, lang="en")
     result_hi: InvoiceVerdict = evaluate_invoice(payload.invoice_text, lang="hi")
@@ -107,6 +109,7 @@ def scan_invoice(payload: InvoiceScanRequest, db: Session = Depends(db_dep)):
         "hi": "; ".join(result_hi.explanations)
     }
     record = ScanHistory(
+        user_id=current_user.id,
         scan_type="invoice",
         input_hash=sha256(payload.invoice_text[:2048]),
         input_text=payload.invoice_text,
@@ -128,7 +131,7 @@ def scan_invoice(payload: InvoiceScanRequest, db: Session = Depends(db_dep)):
 
 
 @router.post("/invoice/upload", response_model=ScanResponse, dependencies=[Depends(verify_api_key)])
-async def scan_invoice_file(file: UploadFile = File(...), db: Session = Depends(db_dep)):
+async def scan_invoice_file(file: UploadFile = File(...), db: Session = Depends(db_dep), current_user: User = Depends(get_current_user)):
     if not file.filename:
         raise HTTPException(status_code=400, detail="Uploaded file must have a filename")
 
@@ -151,6 +154,7 @@ async def scan_invoice_file(file: UploadFile = File(...), db: Session = Depends(
         "hi": "; ".join(result_hi.explanations)
     }
     record = ScanHistory(
+        user_id=current_user.id,
         scan_type="invoice_file",
         input_hash=input_hash,
         input_text="[file upload]",  # Not storing file content, but can be improved

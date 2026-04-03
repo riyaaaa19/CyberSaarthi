@@ -10,6 +10,8 @@ from .logging_conf import setup_logging
 from .db import engine, Base
 from .routers import scan as scan_router
 from .routers import reports as reports_router
+from .routers import auth as auth_router
+from . import auth_models
 
 # --- Settings & Logging ---
 settings = get_settings()
@@ -23,6 +25,7 @@ app = FastAPI(
     title=settings.APP_NAME,
     version="0.1.0",
     openapi_tags=[
+        {"name": "auth", "description": "Authentication endpoints"},
         {"name": "scan", "description": "Email phishing & invoice fraud scans"},
         {"name": "reports", "description": "History and health"},
         {"name": "upload", "description": "Upload invoices/docs for analysis"},
@@ -38,6 +41,7 @@ app.add_middleware(
 )
 
 # --- Include routers ---
+app.include_router(auth_router.router)
 app.include_router(scan_router.router, prefix=settings.API_V1_PREFIX)
 app.include_router(reports_router.router, prefix=settings.API_V1_PREFIX)
 

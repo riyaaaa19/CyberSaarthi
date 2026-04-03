@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
-from ..deps import db_dep
+from ..deps import db_dep, get_current_user
+from ..auth_models import User
 from ..models import ScanHistory
 from ..schemas import HistoryPage, HistoryItem, Verdict
 
@@ -10,11 +11,12 @@ router = APIRouter(prefix="/reports", tags=["reports"])
 
 @router.get("/history", response_model=HistoryPage)
 def get_history(
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(db_dep),
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
 ):
-    q = db.query(ScanHistory).order_by(ScanHistory.created_at.desc())
+    q = db.query(ScanHistory).filter(ScanHistory.user_id == current_user.id).order_by(ScanHistory.created_at.desc())
     total = q.count()
     rows = q.limit(limit).offset(offset).all()
 

@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     ALLOWED_ORIGINS: str = "*"
 
     API_KEY: str | None = None
+    SECRET_KEY: str = "your-secret-key-change-in-production"
 
     DATABASE_URL: str = "sqlite:///./cybersaarthi.db"
 
